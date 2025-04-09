@@ -1,29 +1,29 @@
 # Fxtrategy
 
-Eng | [中文](README.zh.md)
+[Eng](README.md) | 中文
 
 ## 📚 Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
+- [简介](#简介)
+- [特性](#特性)
 - [GetStart](#get-start)
-- [Example](#example)
+- [示例](#示例)
 
 ---
 
-## Introduction
+## 简介
 
-`fxtrategy` is a strategy injection utility based on [Uber FX](https://github.com/uber-go/fx), leveraging generics and named strategy patterns to enable flexible, modular registration and dynamic retrieval of strategies in Go applications.
+`fxtrategy` 是一个基于 [Uber FX](https://github.com/uber-go/fx) 的策略注入工具，使用泛型与命名策略模式，为 Go 应用程序提供灵活、模块化的策略注册与动态获取能力。
 
 ---
 
-## Features
+## 特性
 
-- ✅ Support defining strategy behavior via interfaces  
-- ✅ Strongly-typed context via Go generics  
-- ✅ Name-based strategy registration and retrieval  
-- ✅ Supports multiple contexts (e.g., `Fool` and `Genius`)  
-- ✅ Fully integrated with Uber FX  
+- ✅ 支持通过接口定义策略行为
+- ✅ 基于泛型实现强类型上下文 Context
+- ✅ 可按名称注册与获取策略实例
+- ✅ 支持多个上下文类型共存（如：`Fool` 和 `Genius`）
+- ✅ 与 Uber FX 完美集成
 
 ---
 
@@ -34,9 +34,9 @@ go get github.com/PrettyABoy/fxtrategy@latest
 
 ---
 
-## Example
+## 示例
 
-### Constructors
+### 构造
 ```go
 func newA() fxtrategy.Strategy[Fool] {
 	return fxtrategy.Strategy[Fool]{
@@ -48,7 +48,7 @@ func newA() fxtrategy.Strategy[Fool] {
 }
 ```
 
-### Constructors with dependencies
+### 带依赖的构造
 ```go
 func newA(dependencyA any, dependencyB any) fxtrategy.Strategy[Fool] {
 	return fxtrategy.Strategy[Fool]{
@@ -63,7 +63,7 @@ func newA(dependencyA any, dependencyB any) fxtrategy.Strategy[Fool] {
 }
 ```
 
-### Usage
+### 使用
 ```go
 fx.New(
     fx.Provide(newA, newB, newC, newD),
@@ -72,16 +72,16 @@ fx.New(
 
     fx.Invoke(func(ctx *fxtrategy.Context[Fool]) {
         a, _ := ctx.Get("a")
-        a.Speak() // Output: i'm a
+        a.Speak() // 输出：i'm a
         b, _ := ctx.Get("b")
-        b.Speak() // Output: i'm b
+        b.Speak() // 输出：i'm b
     }),
 
     fx.Invoke(func(ctx *fxtrategy.Context[Genius]) {
         c, _ := ctx.Get("c")
-        c.Speak() // Output: i'm c
+        c.Speak() // 输出：i'm c
         d, _ := ctx.Get("d")
-        d.Speak() // Output: i'm d
+        d.Speak() // 输出：i'm d
     }),
 )
 ```
