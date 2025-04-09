@@ -2,7 +2,6 @@ package fxtrategy
 
 import (
 	"go.uber.org/fx"
-	"log"
 )
 
 // Context to inject and use Strategies
@@ -16,7 +15,6 @@ type contextIn[T any] struct {
 }
 
 func NewContext[T any](in contextIn[T]) *Context[T] {
-	log.Println(in.Strategies)
 	strategies := make(map[string]T, len(in.Strategies))
 	for _, strategy := range in.Strategies {
 		strategies[strategy.Name] = strategy.Item
