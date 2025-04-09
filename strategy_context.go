@@ -30,3 +30,19 @@ func (c *Context[T]) Get(name string) (T, bool) {
 	t, ok := c.mapping[name]
 	return t, ok
 }
+
+// ForEach execute fn on each item
+func (c *Context[T]) ForEach(fn func(T)) {
+	for _, v := range c.mapping {
+		fn(v)
+	}
+}
+
+// Members returns all item's name
+func (c *Context[T]) Members() []string {
+	names := make([]string, 0, len(c.mapping))
+	for name := range c.mapping {
+		names = append(names, name)
+	}
+	return names
+}
