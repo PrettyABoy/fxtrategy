@@ -29,15 +29,21 @@ func (c *Context[T]) Get(name string) (T, bool) {
 	return t, ok
 }
 
+type TravelFunc[T any] func(string, T) error
+
 // ForEach execute fn on each item
-func (c *Context[T]) ForEach(fn func(T)) {
-	for _, v := range c.mapping {
-		fn(v)
+func (c *Context[T]) ForEach(fn TravelFunc[T]) error {
+	for k, v := range c.mapping {
+		err := fn(k, v)
+		if err != nil {
+			return err
+		}
 	}
+	return nil
 }
 
-// Members returns all item's name
-func (c *Context[T]) Members() []string {
+// Names returns all item's name
+func (c *Context[T]) Names() []string {
 	names := make([]string, 0, len(c.mapping))
 	for name := range c.mapping {
 		names = append(names, name)
